@@ -7,6 +7,15 @@ class Board < ApplicationRecord
   validates :mine_count, presence: true, numericality: { greater_than: 0 }
   validate :mine_count_less_than_tile_count
 
+  def as_2d_array
+    grid = []
+    tiles.order(:y, :x).find_each do |tile|
+      grid[tile.y] ||= []
+      grid[tile.y][tile.x] = tile.is_mine?
+    end
+    grid
+  end
+
   private
   def mine_count_less_than_tile_count
     if (mine_count && width && height)

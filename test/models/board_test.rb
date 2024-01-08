@@ -8,6 +8,8 @@ class BoardTest < ActiveSupport::TestCase
   context "validations" do
     should validate_presence_of(:name)
     should validate_presence_of(:email)
+    should allow_value("user@example.com").for(:email)
+    should_not allow_value("not-an-email").for(:email)
     should validate_presence_of(:width)
     should validate_presence_of(:height)
     should validate_presence_of(:mine_count)

@@ -3,7 +3,8 @@ class BoardsController < ApplicationController
 
   # GET /boards or /boards.json
   def index
-    @boards = Board.all
+    @boards = Board.order(created_at: :desc)
+    @boards = @boards.first(10) unless params[:show_all]
   end
 
   # GET /boards/1 or /boards/1.json

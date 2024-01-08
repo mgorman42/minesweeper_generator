@@ -1,14 +1,29 @@
-<p style="color: green"><%= notice %></p>
+<h1> <%= "Recent" unless params[:show_all] %> Minesweeper Boards</h1>
 
-<h1>Boards</h1>
-
-<div id="boards">
+<table id="boards" class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col"> Name </th>
+      <th scope="col"> Email </th>
+      <th scope="col"> Creation Date </th>
+    </tr>
+  </thead>
   <% @boards.each do |board| %>
-    <%= render board %>
-    <p>
-      <%= link_to "Show this board", board %>
-    </p>
+    <tr>
+      <td> <%= link_to board.name, board %> </td>
+      <td> <%= board.email %> </td>
+      <td> <%= board.created_at.to_date %> </td>
+    </tr>
+  <% end %>
+</table>
+
+<div>
+  <%= link_to "New board", new_board_path %>
+</div>
+<div>
+  <% if params[:show_all] %>
+    <%= link_to "View latest boards", boards_path %>
+  <% else %>
+    <%= link_to "View all generated boards", boards_path(show_all: true) %>
   <% end %>
 </div>
-
-<%= link_to "New board", new_board_path %>

@@ -1,9 +1,19 @@
 <h1>Generate a New Minesweeper Board</h1>
+<div class="container">
+  <%= bootstrap_form_with(model: @board) do |form| %>
 
-<%= render "form", board: @board %>
+    <div class="row">
+      <div class="col-sm"> <%= form.text_field :name, required: false, label: "Board Name" %> </div>
+      <div class="col-sm"> <%= form.text_field :email, required: false %> </div>
+    </div>
+    <div class="row">
+      <div class="col-sm"> <%= form.number_field :width, required: false, label: "Board Width" %> </div>
+      <div class="col-sm"> <%= form.number_field :height, required: false, label: "Board Height" %> </div>
+      <div class="col-sm"> <%= form.number_field :mine_count, required: false, label: "Number of Mines" %> </div>
+    </div>
 
-<br>
-
-<div>
-  <%= link_to "List of latest Boards", boards_path %>
+    <div class="row mb-1"> <%= form.submit "Generate Board", class: "btn btn-primary" %> </div>
+  <% end %>
+  <div class="row mb-1"> <%= link_to "List of latest Boards", boards_path, class: "btn btn-secondary" %> </div>
+  <div class="row mb-1"> <%= link_to "View all generated boards", boards_path(show_all: true), class: "btn btn-secondary" %> </div>
 </div>

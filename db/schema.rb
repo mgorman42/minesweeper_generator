@@ -28,7 +28,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_08_163140) do
     t.boolean "is_mine"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["board_id", "x", "y"], name: "index_tiles_on_board_id_and_x_and_y"
+    t.index ["board_id", "y", "x"], name: "index_tiles_on_board_id_and_y_and_x"
     t.index ["board_id"], name: "index_tiles_on_board_id"
   end
 

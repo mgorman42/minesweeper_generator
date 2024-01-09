@@ -1,5 +1,4 @@
 require "test_helper"
-require 'debug'
 
 class BoardTest < ActiveSupport::TestCase
   context "associations" do

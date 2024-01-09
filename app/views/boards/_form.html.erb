@@ -1,11 +1,17 @@
 <%= bootstrap_form_with(model: board) do |form| %>
-  <%= form.text_field :name, required: false %>
-  <%= form.text_field :email, required: false %>
-  <%= form.number_field :width, required: false %>
-  <%= form.number_field :height, required: false %>
-  <%= form.number_field :mine_count, required: false %>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm"> <%= form.text_field :name, required: false, label: "Board Name" %> </div>
+      <div class="col-sm"> <%= form.text_field :email, required: false %> </div>
+    </div>
+    <div class="row">
+      <div class="col-sm"> <%= form.number_field :width, required: false, label: "Board Width" %> </div>
+      <div class="col-sm"> <%= form.number_field :height, required: false, label: "Board Height" %> </div>
+      <div class="col-sm"> <%= form.number_field :mine_count, required: false, label: "Number of Mines" %> </div>
+    </div>
 
-  <div>
-    <%= form.submit %>
+    <div>
+      <%= form.submit "Generate Board" %>
+    </div>
   </div>
 <% end %>

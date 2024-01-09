@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2024_01_08_163140) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "boards", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -22,7 +25,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_08_163140) do
   end
 
   create_table "tiles", force: :cascade do |t|
-    t.integer "board_id"
+    t.bigint "board_id"
     t.integer "x"
     t.integer "y"
     t.boolean "is_mine"

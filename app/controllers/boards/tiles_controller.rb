@@ -6,10 +6,6 @@ class Boards::TilesController < ApplicationController
     @page = params[:page].to_i || 0
     @page_count = @board.height / row_count_per_page
     @tiles = @board.as_2d_array(page_row_start...page_row_stop)
-    respond_to do |format|
-      format.html
-      format.turbo_stream
-    end
   end
 
   private

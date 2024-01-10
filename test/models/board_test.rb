@@ -15,16 +15,20 @@ class BoardTest < ActiveSupport::TestCase
     should validate_presence_of(:mine_count)
   end
 
-  test "validates width is GT 0" do
+  test "validates width is GT 0 and LTE 1000" do
     assert FactoryBot.build(:board).valid?
     assert_not FactoryBot.build(:board, width: 0).valid?
     assert_not FactoryBot.build(:board, width: -1).valid?
+    assert FactoryBot.build(:board, width: 1000).valid?
+    assert_not FactoryBot.build(:board, width: 1001).valid?
   end
 
-  test "validates height is GT 0" do
+  test "validates height is GT 0and LTE 1000" do
     assert FactoryBot.build(:board).valid?
     assert_not FactoryBot.build(:board, height: 0).valid?
     assert_not FactoryBot.build(:board, height: -1).valid?
+    assert FactoryBot.build(:board, height: 1000).valid?
+    assert_not FactoryBot.build(:board, height: 1001).valid?
   end
 
   test "validates mine_count is GT 0 and LT count of tiles" do
@@ -48,6 +52,13 @@ class BoardTest < ActiveSupport::TestCase
       Array.new(5, false),
     ]
     assert_equal expected, board.as_2d_array
+    assert_equal expected[0], board.as_2d_array[0]
+    assert_equal expected[1], board.as_2d_array[1]
+    assert_equal expected[2], board.as_2d_array[2]
+    assert_equal expected[3], board.as_2d_array[3]
+    assert_equal expected[4], board.as_2d_array[4]
+
+    assert_equal expected[1...2], board.as_2d_array(1...2)
   end
 
   test 'generate_board' do

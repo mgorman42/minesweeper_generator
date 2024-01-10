@@ -2,21 +2,13 @@
 <div class="row"><h3> by: <%= @board.email %> </h3> </div>
 <div class="row">
   <div class="sm-col overflow-auto">
-    <table class="board">
-      <% @board.as_2d_array.each do |row| %>
-        <tr>
-          <% row.each do |tile| %>
-            <td>
-              <% if tile %>
-                <i class='fa-solid fa-bomb'></i>
-              <% else %>
-                <i class='fa-regular fa-square'></i>
-              <% end %>
-            </td>
-          <% end %>
-        </tr>
-      <% end %>
-    </table>
+    <%= turbo_frame_tag(
+      "tiles-page-0",
+      loading: :lazy,
+      src: board_tiles_path(board_id: @board.id, page: 0),
+    ) do %>
+    Loading...
+  <% end %>
   </div>
 </div>
 <div class="row mb-1"> <%= link_to "New board", new_board_path, class: "btn btn-secondary" %> </div>

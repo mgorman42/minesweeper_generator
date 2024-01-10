@@ -1,0 +1,15 @@
+<table id="board-page-<% @page %>" class="board">
+  <% @tiles.each do |row| %>
+    <tr>
+      <% row.each do |tile| %>
+        <td>
+          <% if tile %>
+            <i class='fa-solid fa-bomb'></i>
+          <% else %>
+            <i class='fa-regular fa-square'></i>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

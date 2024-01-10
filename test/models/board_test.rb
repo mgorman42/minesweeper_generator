@@ -23,7 +23,7 @@ class BoardTest < ActiveSupport::TestCase
     assert_not FactoryBot.build(:board, width: 1001).valid?
   end
 
-  test "validates height is GT 0" do
+  test "validates height is GT 0and LTE 1000" do
     assert FactoryBot.build(:board).valid?
     assert_not FactoryBot.build(:board, height: 0).valid?
     assert_not FactoryBot.build(:board, height: -1).valid?

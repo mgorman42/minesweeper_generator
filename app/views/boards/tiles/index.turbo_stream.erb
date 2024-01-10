@@ -1,0 +1,15 @@
+<%= turbo_frame_tag "tiles-page-#{@page}" do %>
+  <%= render partial: "tiles" %>
+  
+  <% next_page = @page+1 %>
+  <% if next_page < @page_count %>
+    <%= turbo_frame_tag(
+      "tiles-page-#{next_page}",
+      # autoscroll: true,
+      loading: :lazy,
+      src: board_tiles_path(board_id: @board.id, page: next_page),
+    ) do %>
+      Loading...
+    <% end %>
+  <% end %>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_08_163140) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_11_175307) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -31,6 +31,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_08_163140) do
     t.boolean "is_mine"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "board_index"
+    t.index ["board_id", "board_index"], name: "index_tiles_on_board_id_and_board_index"
     t.index ["board_id", "y", "x"], name: "index_tiles_on_board_id_and_y_and_x"
     t.index ["board_id"], name: "index_tiles_on_board_id"
   end

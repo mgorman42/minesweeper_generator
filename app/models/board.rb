@@ -32,32 +32,48 @@ class Board < ApplicationRecord
 
   def generate_board
     return false unless self.errors.empty?
-    mines = generate_mines_list
-    generate_tiles(mines)
+    generate_tiles
+    generate_mines
   end
 
-  def generate_mines_list
+  def generate_mines
     gen = LFSR.gen(tile_count - 1) # LFSR gen random number range is inclusive
     offset = rand(tile_count) # Rand random number range only includes min not max
-    mine_count.times.map do
-      index = gen.next_i - offset
-      index += tile_count if index < 0
-      index
+    remaining_mines = mine_count
+    mines_batch = []
+    while remaining_mines > 0 do
+      batch_size = [1000, remaining_mines].min
+      batch_size.times do
+        index = gen.next_i - offset
+        index += tile_count if index < 0
+        mines_batch << index
+      end
+      Tile.where(board_id: self.id, board_index: mines_batch).update_all(is_mine: true)
+      mines_batch = []
+      remaining_mines -= batch_size
     end
   end
 
-  def generate_tiles(mines)
-    ys = (0...height).to_a
-    xs = (0...width).to_a
-    tile_hashes = ys.product(xs).each_with_index.map do | (y, x), index |
-      {
-        board_id: self.id,
-        y: y,
-        x: x,
-        is_mine: mines.include?(index)
-      }
+  def generate_tiles
+    i = 0
+    tile_hashes = []
+    height.times do |y|
+      width.times do |x|
+        tile_hashes << {
+          board_id: self.id,
+          y: y,
+          x: x,
+          board_index: i,
+          is_mine: false
+        }
+        i += 1
+        if (i % 1000 == 0)
+          Tile.insert_all(tile_hashes)
+          tile_hashes = []
+        end
+      end
     end
-    Tile.insert_all!(tile_hashes)
+    Tile.insert_all(tile_hashes)
   end
 
   def tile_count
